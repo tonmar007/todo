@@ -1,7 +1,6 @@
 import React from "react";
 import Mission from "./Mission";
-import AddMissionForm from "./AddMissionForm";
-import EditMissionForm from "./EditMissionForm";
+import TodoList from "./TodoList";
 
 class App extends React.Component {
 	state = {
@@ -11,11 +10,20 @@ class App extends React.Component {
 	addMission = mission => {
 		// 1. Take a copy of the existing state
 		const missions = { ...this.state.missions };
-		// 2. Add our new fish to that missions variable
+		// 2. Add our new mission to that missions variable
 		missions[`mission${Date.now()}`] = mission;
 		// 3. Set the new missions object to state
 		this.setState({ missions });
 	};
+
+	// updateMission = (key, updatedMission) => {
+	// 	// 1. Take a copy of the current state
+	// 	const missions = { ...this.state.missions };
+	// 	// 2. Update that state
+	// 	missions[key] = updatedMission;
+	// 	// 3. Set that to state
+	// 	this.setState({ missions });
+	// };
 
 	deleteMission = key => {
 		// 1. Take a copy of state
@@ -37,14 +45,11 @@ class App extends React.Component {
 							details={this.state.missions[key]} 
 						/>
 					))}
-					{Object.keys(this.props.missions).map(key => (
-          <EditMissionForm 
-            key={key}
-            index={key}
-            deleteMission={this.props.deleteMission}
-          />
-        	))}
-					<AddMissionForm addMission={this.addMission} />
+					<TodoList 
+						addMission={this.addMission}
+						deleteMission={this.deleteMission}
+						missions={this.state.missions}
+					/>
 				</ul>
 			</div>
 		);
